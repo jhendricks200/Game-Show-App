@@ -13,8 +13,7 @@ start.addEventListner('click', () => {
    } else {
       overlay.style.display = 'none';
    }
-
-  });
+   });
 
 //Array of phrases
 const phrases =[
@@ -27,6 +26,29 @@ const phrases =[
 
 //Get a random phrase from the array
 const getRandomPhraseAsArray = arr => {
+  let randomNumber = Math.floor(Math.random() * phrases.length )
+  return phrases[randomNumber];
+};
 
+const getRandomPhrase = getRandomPhraseAsArray(phrases);
+const randomPhrase = randomPhrase.split('');
+
+const addPhraseToDisplay = arr => {
+  for (let i = 0; i < getRandomPhrase.length; i++) {
+  const li = document.createElement('li');
+  li.textContent = randomPhrase[i];
+  if (li.textContent == '') {
+    li.className = 'space';
+  } else {
+    li.className = 'letter';
+    phraseLetterCount ++;
+  }
+    ul.appendChild(li);
+    phrase.appendChild(ul);
+  }
+};
+
+const checkLetter = button => {
+  const letter = document.querySelectorAll('.letter');
 
 }
