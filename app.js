@@ -49,6 +49,18 @@ const addPhraseToDisplay = arr => {
 };
 
 const checkLetter = button => {
-  const letter = document.querySelectorAll('.letter');
+  const letter = document.getElementById('letter');
+  let matchingLetter = null;
 
-}
+  for (let i = 0; i < letters.length; i++) {
+   if (button === letters[i].textContent) {
+      letters[i].className = 'show';
+      matchingLetter = button;
+    }
+  }
+  return matchingLetter;
+};
+
+qwerty.addEventListner('click', (e) => {
+  const button = event.target.textContent;
+});
