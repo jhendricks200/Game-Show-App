@@ -34,7 +34,7 @@ const getRandomPhraseAsArray = arr => {
 };
 
 const getRandomPhrase = getRandomPhraseAsArray(phrases);
-const randomPhrase = randomPhrase.split('');
+const randomPhrase = getRandomPhrase.split('');
 
 const addPhraseToDisplay = arr => {
   for (let i = 0; i < getRandomPhrase.length; i++) {
@@ -64,6 +64,6 @@ const checkLetter = button => {
   return matchingLetter;
 };
 
-qwerty.addEventListner('click', (e) => {
+qwerty.addEventListener('click', (e) => {
   const button = event.target.textContent;
 });
