@@ -5,7 +5,12 @@ const overlay = document.getElementById('overlay');
 let missed = 0;
 let resetGame = 0;
 
-const title = document.querySelector('.title');
+
+
+
+start.addEventListener('click', e => {
+overlay.style.display = 'none';
+ });
 
 //Array of phrases
 const phrases =[
@@ -16,25 +21,14 @@ const phrases =[
   'Leave the gun take the cannoli'];
 
 
-
-start.addEventListener('click', () => {
-   if (resetGame === 1) {
-     reset();
-   } else {
-      overlay.style.display = 'none';
-   }
-   });
-
-
-
 //Get a random phrase from the array
-const getRandomPhraseAsArray = arr => {
-  let randomNumber = Math.floor(Math.random() * phrases.length )
-  return phrases[randomNumber];
+const getRandomPhraseAsArray = (arr) => {
+    const rand = Math.floor(Math.random()*arr.length);
+    return arr[rand].split('');
 };
 
 const getRandomPhrase = getRandomPhraseAsArray(phrases);
-const randomPhrase = getRandomPhrase.split('');
+
 
 const addPhraseToDisplay = arr => {
   for (let i = 0; i < getRandomPhrase.length; i++) {
@@ -51,12 +45,14 @@ const addPhraseToDisplay = arr => {
   }
 };
 
+
+
 const checkLetter = button => {
   const letter = document.getElementById('letter');
   let matchingLetter = null;
 
-  for (let i = 0; i < letters.length; i++) {
-   if (button === letters[i].textContent) {
+  for (let i = 0; i < letter.length; i++) {
+   if (button === letter[i].textContent) {
       letters[i].className = 'show';
       matchingLetter = button;
     }
@@ -64,6 +60,28 @@ const checkLetter = button => {
   return matchingLetter;
 };
 
+
+
+
 qwerty.addEventListener('click', (e) => {
-  const button = event.target.textContent;
-});
+  let item = e.target;
+    if ( e.target.tagName === "BUTTON" ){
+        item.className = " chosen";
+        item.disabled = true;
+    }
+    let hearts = Array.from(document.querySelectorAll('.tries img'));
+    if (checkLetter(item) == null && e.target.tagName === "BUTTON"){
+        hearts[missed].src="images/lostHeart.png";
+        missed++;
+      }
+    checkWin();
+  });
+
+  function checkWin(){
+    let lettersShown = Array.from(document.querySelectorAll('.show'));
+    if (lettersShown.length == letters.length){
+      resetWinner();
+    } else if (missed>=5){
+      resetLoser();
+    }
+  };
