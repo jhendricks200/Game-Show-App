@@ -2,16 +2,8 @@ const qwerty = document.getElementById('qwerty');
 const phrase = document.getElementById('phrase');
 const start =  document.querySelector('.btn__reset');
 const overlay = document.getElementById('overlay');
-const ul = document.querySelector('#phrase ul');
 let missed = 0;
 let resetGame = 0;
-
-
-
-
-start.addEventListener('click', e => {
-overlay.style.display = 'none';
- });
 
 //Array of phrases
 const phrases =[
@@ -20,12 +12,18 @@ const phrases =[
   'It is hot outside',
   'Pump your brakes',
   'Leave the gun take the cannoli'];
+const ul = document.querySelector('#phrase ul');
+
+
+start.addEventListener('click', e => {
+overlay.style.display = 'none';
+ });
 
 
 //Get a random phrase from the array
-const getRandomPhraseAsArray = (arr) => {
-    const rand = Math.floor(Math.random()*arr.length);
-    return arr[rand].split('');
+function getRandomPhraseAsArray(arr) {
+  const randomPhrase = arr[Math.floor(Math.random() * arr.length)].split('');
+  return randomPhrase;
 };
 
 const getRandomPhrase = getRandomPhraseAsArray(phrases);
@@ -50,8 +48,8 @@ const addPhraseToDisplay = arr => {
 addPhraseToDisplay(getRandomPhrase);
 
 const checkLetter = button => {
- let matchingLetter = null;
  const letter = document.getElementById('letter');
+ let matchingLetter = null;
 
 
   for (let i = 0; i < letter; i++) {
@@ -62,8 +60,6 @@ const checkLetter = button => {
   }
   return matchingLetter;
 };
-
-
 
 
 qwerty.addEventListener('click', (e) => {
@@ -80,13 +76,21 @@ qwerty.addEventListener('click', (e) => {
     checkWin();
   });
 
-const checkWin = () => {
-   const letters = document.querySelectorAll('.letter');
-   const show = document.querySelectorAll('.show')
-    if(missed >= 5 && letters.length !== show.length){
-       winLose('lose', 'Sorry, You lose', 'Try Again');
-    }else if (missed < 5 && letters.length === show.length){
-       winLose('win', 'Congratulations, You win', 'Play Again')
-          }
+  function checkWin() {
+    let lettersTotal = document.querySelectorAll('.letter');
+    let showTotal = document.querySelectorAll('.show');
+    let message = document.querySelector('.title');
 
-  };
+    if (lettersTotal.length === showTotal.length) {
+      overlay.style.display = 'flex';
+      overlay.className = 'win';
+      message.textContent = 'You won!';
+      playGameAgain();
+    }
+    else if (missed >= 5) {
+      overlay.style.display = 'flex';
+      overlay.className = 'lose';
+      message.textContent = 'Sorry, you lost!';
+      playGameAgain();
+    }
+  }
