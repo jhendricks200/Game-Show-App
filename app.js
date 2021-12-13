@@ -51,7 +51,7 @@ const checkLetter = button => {
  let letterFound = null;
    for (let i = 0; i < letter.length; i++) {
    if (button.textContent === letter[i].textContent) {
-      letter[i].className = ('show');
+      letter[i].classList.add('show');
       letter[i].style.transition = '1s ease-in';
       letterFound = true;
     }
