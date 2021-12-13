@@ -39,7 +39,6 @@ const addPhraseToDisplay = arr => {
     li.className = 'letter';
 
   }
-
     ul.appendChild(li);
     phrase.appendChild(ul);
   }
@@ -50,9 +49,7 @@ addPhraseToDisplay(getRandomPhrase);
 const checkLetter = button => {
  const letter = document.querySelectorAll('.letter');
  let letterFound = null;
-
-
-  for (let i = 0; i < letter.length; i++) {
+   for (let i = 0; i < letter.length; i++) {
    if (button.textContent === letter[i].textContent) {
       letter[i].className = ('show');
       letter[i].style.transition = '1s ease-in';
@@ -64,22 +61,17 @@ const checkLetter = button => {
 
 
 qwerty.addEventListener('click', (e) => {
-  let item = e.target;
-    if ( e.target.tagName === "BUTTON" ){
-    const clickedLetter = e.target;
-
+  // let item = e.target;
+if ( e.target.tagName === "BUTTON" ){
+   const clickedLetter = e.target;
    clickedLetter.classList.add('chosen');
    clickedLetter.setAttribute('disabled', '');
-
    const match = checkLetter(clickedLetter);
-
    if (match === null) {
      missed++;
-
-     const lives = document.querySelectorAll('.tries img');
-     const lostLife = 5 - missed;
-
-     lives[lostLife].src =  'images/lostHeart.png';
+   const lives = document.querySelectorAll('.tries img');
+   const lostLife = 5 - missed;
+   lives[lostLife].src =  'images/lostHeart.png';
    }
    checkWin();
  }
@@ -111,11 +103,11 @@ function playGameAgain() {
   // Reset count, clear last phrase, and activate keyboard
   missed = 0;
   ul.textContent = '';
-  const priorGameLetters = document.querySelectorAll('.chosen');
+  const priorGame = document.querySelectorAll('.chosen');
 
-  for(let i = 0; i < priorGameLetters.length; i++) {
-    priorGameLetters[i].classList.remove('chosen');
-    priorGameLetters[i].disabled = false;
+  for(let i = 0; i < priorGame.length; i++) {
+    priorGame[i].classList.remove('chosen');
+    priorGame[i].disabled = false;
   }
 
 
