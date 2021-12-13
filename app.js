@@ -7,11 +7,11 @@ let resetGame = 0;
 
 //Array of phrases
 const phrases =[
-  'The city that never sleeps',
-  'It is cold outside',
-  'It is hot outside',
-  'Pump your brakes',
-  'Leave the gun take the cannoli'];
+  'the city that never sleeps',
+  'it is cold outside',
+  'it is hot outside',
+  'pump your brakes',
+  'leave the gun take the cannoli'];
 const ul = document.querySelector('#phrase ul');
 
 
@@ -48,33 +48,42 @@ const addPhraseToDisplay = arr => {
 addPhraseToDisplay(getRandomPhrase);
 
 const checkLetter = button => {
- const letter = document.getElementById('letter');
- let matchingLetter = null;
+ const letter = document.querySelectorAll('.letter');
+ let letterFound = null;
 
 
-  for (let i = 0; i < letter; i++) {
-   if (button === letter[i].textContent) {
-      letters[i].className = 'show';
-      matchingLetter = button;
+  for (let i = 0; i < letter.length; i++) {
+   if (button.textContent === letter[i].textContent) {
+      letter[i].className = ('show');
+      letter[i].style.transition = '1s ease-in';
+      letterFound = true;
     }
   }
-  return matchingLetter;
+  return letterFound;
 };
 
 
 qwerty.addEventListener('click', (e) => {
   let item = e.target;
     if ( e.target.tagName === "BUTTON" ){
-        item.className = "chosen";
-        item.disabled = true;
-    }
-    let hearts = Array.from(document.querySelectorAll('.tries img'));
-    if (checkLetter(item) == null && e.target.tagName === "BUTTON"){
-        hearts[missed].src="images/lostHeart.png";
-        missed++;
-      }
-    checkWin();
-  });
+    const clickedLetter = e.target;
+
+   clickedLetter.classList.add('chosen');
+   clickedLetter.setAttribute('disabled', '');
+
+   const match = checkLetter(clickedLetter);
+
+   if (match === null) {
+     missed++;
+
+     const lives = document.querySelectorAll('.tries img');
+     const lostLife = 5 - missed;
+
+     lives[lostLife].src =  'images/lostHeart.png';
+   }
+   checkWin();
+ }
+});
 
   function checkWin() {
     let lettersTotal = document.querySelectorAll('.letter');
@@ -90,7 +99,29 @@ qwerty.addEventListener('click', (e) => {
     else if (missed >= 5) {
       overlay.style.display = 'flex';
       overlay.className = 'lose';
-      message.textContent = 'Sorry, you lost!';
+      message.textContent = 'Sorry, you lose!';
       playGameAgain();
     }
   }
+
+  // Reset game
+function playGameAgain() {
+  start.textContent = 'Play again?';
+
+  // Reset count, clear last phrase, and activate keyboard
+  missed = 0;
+  ul.textContent = '';
+  const priorGameLetters = document.querySelectorAll('.chosen');
+
+  for(let i = 0; i < priorGameLetters.length; i++) {
+    priorGameLetters[i].classList.remove('chosen');
+    priorGameLetters[i].disabled = false;
+  }
+
+
+  // Refill lives
+  const hearts = document.querySelectorAll('.tries img');
+  for(i = 0; i < hearts.length; i++) {
+    hearts[i].src = 'images/liveHeart.png';
+  }
+}
