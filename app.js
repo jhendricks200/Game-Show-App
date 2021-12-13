@@ -85,13 +85,13 @@ if ( e.target.tagName === "BUTTON" ){
     if (lettersTotal.length === showTotal.length) {
       overlay.style.display = 'flex';
       overlay.className = 'win';
-      message.textContent = 'You won!';
+      message.textContent = 'You did great!';
       playGameAgain();
     }
     else if (missed >= 5) {
       overlay.style.display = 'flex';
       overlay.className = 'lose';
-      message.textContent = 'Sorry, you lose!';
+      message.textContent = 'Try again!';
       playGameAgain();
     }
   }
@@ -109,6 +109,9 @@ function playGameAgain() {
     priorGame[i].classList.remove('chosen');
     priorGame[i].disabled = false;
   }
+
+  const newPhrase = getRandomPhraseAsArray(phrases);
+  addPhraseToDisplay(newPhrase);
 
 
   // Refill lives
